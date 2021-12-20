@@ -26,8 +26,10 @@ public class SimpleArticleService implements ArticleService {
         var words = wordStore.findAll();
         var articles = IntStream.iterate(0, i -> i < count, i -> i + 1)
                 .peek(i -> LOGGER.info("Сгенерирована статья № {}", i))
-                .mapToObj((x) -> articleGenerator.generate(words))
-                .collect(Collectors.toList());
+                .mapToObj((x) -> articleGenerator.generate(words));
+               /*.collect(Collectors.toList()); терминальная операция попытается создать
+               весь миллион объектов и записать их скопом в один список
+                */
         articles.forEach(articleStore::save);
     }
 }
